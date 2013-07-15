@@ -1,0 +1,13 @@
+dial 				> call 
+phone 				> call 
+text 				> sms 
+send message		> sms 
+send				> sms 
+send a text message > sms
+send text message 	> sms
+pardon				> repeat 
+say again			> repeat
+quit				> cancel 
+exit				> cancel
+ok					> yes
+sure				> yes

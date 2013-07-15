@@ -1,0 +1,49 @@
+but week			> patrick
+this week			> patrick
+c'mon				> simone
+brian				> bryan
+meek meek			> mimic
+meek mill			> mimic
+munich				> mimic
+meet me				> mimic
+cindy this			> send a text
+cid					> set
+sid					> set
+yesss				> yes
+ya					> yes
+yeah				> yes
+okay				> yes
+nah					> no
+kno					> no
+i know				> no
+nope				> no
+note				> no
+cancer				> cancel
+kansas				> cancel
+fun 				> phone
+dianna 				> diana
+vienna 				> diana
+dina 				> diana
+deana				> diana
+pewter 				> peter
+either				> peter
+beat it				> peter
+peeta				> peter
+jen it				> janet
+jenny				> janet
+jones				> john
+joan				> john
+jones				> john
+join				> john
+job					> john
+them up				> the map
+this message		> send a text message
+text 				> sms
+if it is			> sms
+estimate			> sms
+for					> 4
+full				> 4
+fall				> 4
+won					> 1
+tool				> 2
+free				> 3

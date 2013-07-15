@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">SpeechTestsPat</string>
+    <string name="action_settings">Help</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="push_to_start">Push to start</string>
+
+</resources>

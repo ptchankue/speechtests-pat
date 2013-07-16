@@ -1,7 +1,7 @@
 but week			> patrick
 this week			> patrick
 c'mon				> simone
-brian				> bryan
+bryan				> brian
 meek meek			> mimic
 meek mill			> mimic
 munich				> mimic
@@ -29,6 +29,7 @@ pewter 				> peter
 either				> peter
 beat it				> peter
 peeta				> peter
+gold digger			> call peter
 jen it				> janet
 jenny				> janet
 jones				> john

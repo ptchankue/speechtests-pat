@@ -14,6 +14,7 @@ import android.speech.RecognizerIntent;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -28,32 +29,31 @@ import com.example.speechtestspat.utils.Constants;
 public class SpeechMainActivity extends Activity implements
 InteractionCompletedEvent {
 
-	public ListView 		mList;
-	private ASR 			voicerec;
-	private TTS 			tts;
+	public ListView 			mList;
+	private ASR 				voicerec;
+	private TTS 				tts;
 	private DialogueManager		mDialogue;
 
-	public static final int DELAY = 1*1000;
+	public static final int 	DELAY = 1*1000;
 
-	private Handler 		mHandler = new Handler();
+	private Handler 			mHandler = new Handler();
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_speech_main);
 
-		mList = (ListView) findViewById(R.id.list);
 		((Button)findViewById(R.id.pushstart)).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				onShortPress();
 			}
 		});
-		ShowList(new ArrayList<String>());
+		
+		mList = (ListView) findViewById(R.id.list);
+		
 		voicerec = new ASR(this, this);
 		tts = new TTS(this, this);
 		mDialogue = new DialogueManager(this);
-
-		//onShortPress();
 
 		mHandler.postDelayed(periodicTask, DELAY);
 
@@ -82,6 +82,21 @@ InteractionCompletedEvent {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.speech_main, menu);
+		return true;
+	}
+public boolean onOptionsItemSelected(MenuItem item) {
+		
+
+		switch (item.getItemId()) 
+		{
+			case R.id.help:     
+				String s  = "EXAMPLE OF COMMANDS\n- what time is it?\n- what is your name\n- what is the weather\n- call patrick\n- sms janet\n- where am I?\n- where is my location\n- exit\n- close application";	
+				toast(s);			
+
+			break;
+			
+		}
+
 		return true;
 	}
 
@@ -161,13 +176,11 @@ InteractionCompletedEvent {
 	public void onResultAvailable() {
 		// TODO Auto-generated method stub
 		ShowList(voicerec.getResults());
-		
-		
+			
 
 		mDialogue.processSpeech(voicerec.getResults());
 
 		toast(mDialogue.selectedLine);
-		//context.launcher.launch(VoiceRec.decipher(voiceResults), voiceResults.get(0));
 
 		//tts.say(most);
 	}
@@ -176,6 +189,7 @@ InteractionCompletedEvent {
 		mList.setAdapter(new ArrayAdapter<String>(getBaseContext(), 
 				android.R.layout.simple_list_item_1,
 				content));
+		
 	}
 	private void toast(String text){
 		Toast.makeText(getBaseContext(), text, Toast.LENGTH_LONG).show();

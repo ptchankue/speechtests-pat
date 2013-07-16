@@ -38,10 +38,10 @@ public class ASR  implements RecognitionListener {
 	private AudioManager				mAudioManager;
 	private int							volume;
 	private static String 				TAG = "ASR";
-	
+
 	private Logger						log = new Logger();
 	private String 						filename = "speechtest.txt";
-	
+
 	public ASR(SpeechMainActivity context, InteractionCompletedEvent event)
 	{
 		this.context = context;
@@ -57,27 +57,6 @@ public class ASR  implements RecognitionListener {
 		volumeMax();
 		sound.beep();
 		startSpeechRecognition();
-	}
-
-	public void destroy()
-	{
-		Log.v(TAG, "Goodbye from ASR");
-		mute(false);
-		if(recogniser != null)
-			recogniser.destroy();
-		if(sound != null)
-			if(sound.soundPool!= null){
-				sound.beep();
-				sound.soundPool.release();
-			}
-				
-		//Put back the volume to normal
-		mAudioManager.setStreamVolume(mAudioManager.STREAM_MUSIC, volume, 0);
-	}
-
-	
-	public ArrayList<String> getResults(){
-		return mResults;
 	}
 
 	//Run from the main thread :)
@@ -99,7 +78,7 @@ public class ASR  implements RecognitionListener {
 				}
 			}
 		});
-		
+
 	}
 
 	public void startSpeechIntent()
@@ -112,12 +91,16 @@ public class ASR  implements RecognitionListener {
 		intent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE,
 		"za.ac.nmmu.mimic");
 
-		if(recogniser == null) {
-			recogniser = SpeechRecognizer
-			.createSpeechRecognizer(context.getApplicationContext());
-			recogniser.cancel();
-			recogniser.setRecognitionListener(this);
+		if(recogniser != null) {
+			recogniser.destroy();
+			recogniser = null;
+
 		}
+
+		recogniser = SpeechRecognizer
+		.createSpeechRecognizer(context.getApplicationContext());
+		recogniser.setRecognitionListener(this);
+
 
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
 		{
@@ -127,26 +110,7 @@ public class ASR  implements RecognitionListener {
 		recogniser.startListening(intent);
 	}
 
-	// to ensure that the speech engine is always on
-	public class silenceTimer extends TimerTask {
-		public void run() {
-			onError (SpeechRecognizer.ERROR_SPEECH_TIMEOUT);
-		}
-	}
-	public void mute(boolean b){
-		//Log.i(TAG, "mute() " + b);
-		mAudioManager.setStreamMute(AudioManager.STREAM_SYSTEM, b);
-	}
-	
-	private void volumeMax(){
-		int amStreamMusicMaxVol = mAudioManager.getStreamMaxVolume(mAudioManager.STREAM_MUSIC);
-		// take 3 quater of the max volume
-		amStreamMusicMaxVol /=.5;
-		mAudioManager.setStreamVolume(mAudioManager.STREAM_MUSIC, amStreamMusicMaxVol, 0);
-		Log.i(TAG,"Volume " + amStreamMusicMaxVol);
-		int currentVolume = mAudioManager.getStreamVolume(AudioManager.STREAM_RING);
-		Log.v(TAG, "Adjust volume");
-	}
+
 	@Override
 	public void onResults(Bundle results) {
 		Log.d(TAG, "onResults");
@@ -185,8 +149,13 @@ public class ASR  implements RecognitionListener {
 			mResults = voiceResults;
 			event.onResultAvailable();
 		}
-		
 
+
+	}
+
+
+	public ArrayList<String> getResults(){
+		return mResults;
 	}
 
 	@Override
@@ -207,10 +176,6 @@ public class ASR  implements RecognitionListener {
 	}
 
 	public void onError(int error) {
-		Log.d(TAG,"Error listening for speech: " + error);
-
-		if (error != 5 && error != 6 && error != 8)
-			sound.error();
 
 		boolean restart = true;
 		mReady = false;
@@ -251,10 +216,17 @@ public class ASR  implements RecognitionListener {
 			break;
 
 		}
-		Log.i(TAG,  "Error: " +  error + " - " + mError);
+		if (error != 5 && error != 6 && error != 8)
+			sound.error();
+
+
+
+		Log.d(TAG,"Error listening for speech: " + error+ " - " + mError);
 		log.appendLog("Error: " + mError, filename);
- //mError = "";
+		//mError = "";
 		if( restart) {
+			recogniser.destroy();
+			recogniser = null;
 			startSpeechRecognition();
 		}
 	}
@@ -293,10 +265,46 @@ public class ASR  implements RecognitionListener {
 	public void onRmsChanged(float rmsdB) {
 		// TODO Auto-generated method stub
 		if(rmsdB > 5) {
-			Log.d(TAG, "onRMSChanged " + rmsdB);
+			//Log.d(TAG, "onRMSChanged " + rmsdB);
 		}
-		
+
+	}
+	// to ensure that the speech engine is always on
+	public class silenceTimer extends TimerTask {
+		public void run() {
+			onError (SpeechRecognizer.ERROR_SPEECH_TIMEOUT);
+		}
+	}
+	public void mute(boolean b){
+		//Log.i(TAG, "mute() " + b);
+		mAudioManager.setStreamMute(AudioManager.STREAM_SYSTEM, b);
 	}
 
+	private void volumeMax(){
+		int amStreamMusicMaxVol = mAudioManager.getStreamMaxVolume(mAudioManager.STREAM_MUSIC);
+		amStreamMusicMaxVol /=.5;
+		mAudioManager.setStreamVolume(mAudioManager.STREAM_MUSIC, amStreamMusicMaxVol, 0);
+		Log.i(TAG,"Volume " + amStreamMusicMaxVol);
+		int currentVolume = mAudioManager.getStreamVolume(AudioManager.STREAM_RING);
+		Log.v(TAG, "Adjust volume");
+	}
+
+	public void destroy()
+	{
+		Log.v(TAG, "Goodbye from ASR");
+		mute(false);
+		if(recogniser != null) {
+			recogniser.destroy();
+			recogniser = null;	
+		}
+		if(sound != null)
+			if(sound.soundPool!= null){
+				sound.beep();
+				sound.soundPool.release();
+			}
+
+		//Put back the volume to normal
+		mAudioManager.setStreamVolume(mAudioManager.STREAM_MUSIC, volume, 0);
+	}
 
 }

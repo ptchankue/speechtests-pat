@@ -20,7 +20,8 @@ public class NLU {
 			"please", "phone", "galaxy", "music", "hi", "name", "reminder",
 			"alarm", "set", "show", "map", "where", "am", "galaxy","mimic",
 			"text", "phone"	, "sms",
-			"1", "2", "3", "4"
+			"1", "2", "3", "4", "john", "maria", "patrick", "janet", "simone",
+			"felix", "bob"
 	};
 
 	private String currentCmd; 
@@ -85,7 +86,7 @@ public class NLU {
 		System.out.println("getBestResult");
 		double[] prob 	= new double[speech.size()];
 		selectedLine 	= null;
-		contactName 	= null;
+		//contactName 	= null;
 		//currentCmd = null;
 
 		//looking for the result that contains the most keywords
@@ -130,6 +131,10 @@ public class NLU {
 		}
 		return contactName;
 	}
+	
+	public void setName(String n){
+		contactName = n;
+	}
 	/**
 	 * 
 	 * @param value
@@ -145,9 +150,9 @@ public class NLU {
 		return value;	
 	}
 	
-	private String homophone(String text){
-		// the homophone files hould be structured this way 
-		// so that a loop does all teh replacements
+	private String homophon(String text){
+		// the homophon files should be structured this way 
+		// so that a loop does all the replacements
 		text = text.toLowerCase();
 		for(String[] s: homophone){
 			text.replaceAll(s[0].trim(), s[1].trim());

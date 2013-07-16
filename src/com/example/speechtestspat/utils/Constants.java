@@ -26,9 +26,11 @@ public final class Constants {
 	public static final String CMD_EXIT = "exit";
 	public static final String CMD_REPEAT = "repeat";
 	public static final String CMD_CANCEL = "cancel";
+	public static final String CMD_CLOSE = "close";
 	
 	public static final String CONFIRMSPEECH = "Is this correct?";
 	public static final int READYSOUND = 0;
 	public static final int FAILSOUND = 1;
 	public static final int BEEPSOUND = 2;
+	
 }

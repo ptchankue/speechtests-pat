@@ -11,16 +11,26 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".SpeechMainActivity" >
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".8"
+        android:background="#aeaeae" 
+        android:orientation="vertical" >
+
+        <ListView
+            android:id="@+id/list"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            >
+        </ListView>
+
+    </LinearLayout>
+
     <Button
         android:id="@+id/pushstart"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/push_to_start" />
-
-    <ListView
-        android:id="@+id/list"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" 
-        android:background="#aeaeae"/>
 
 </LinearLayout>

@@ -176,12 +176,12 @@ public class ASR  implements RecognitionListener {
 		} else {
 			sound.beep();
 			Log.d(TAG, "Printing matches: ");
-			log.appendLog("Printing matches: ", filename);
+			String s = "Printing the results";
 			for (String match : voiceResults) {
 				Log.d(TAG, match);
-				log.appendLog(match, filename);
+				s += "\n" + match;
 			}
-
+			log.appendLog(s, filename);
 			mResults = voiceResults;
 			event.onResultAvailable();
 		}
@@ -292,8 +292,10 @@ public class ASR  implements RecognitionListener {
 	@Override
 	public void onRmsChanged(float rmsdB) {
 		// TODO Auto-generated method stub
-		//Log.d(TAG, "onRMSChanged");
-
+		if(rmsdB > 5) {
+			Log.d(TAG, "onRMSChanged " + rmsdB);
+		}
+		
 	}
 
 

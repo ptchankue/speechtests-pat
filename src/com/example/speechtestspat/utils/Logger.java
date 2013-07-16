@@ -27,7 +27,7 @@ public class Logger {
 			myFolder.mkdir();
 
 		File logFile = new File(myFolder + "/"+  FILENAME);
-		Log.d(TAG, logFile.toString() + " created");
+		//Log.d(TAG, logFile.toString() + " created");
 
 		if (!logFile.exists())
 		{
@@ -61,7 +61,7 @@ public class Logger {
 			myFolder.mkdir();
 
 		File logFile = new File(myFolder + "/"+  filename);
-		Log.d(TAG, logFile.toString() + " created");
+		//Log.d(TAG, logFile.toString() + " created");
 
 		if (!logFile.exists())
 		{

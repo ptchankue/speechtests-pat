@@ -28,7 +28,6 @@ import com.example.speechtestspat.utils.Constants;
 public class SpeechMainActivity extends Activity implements
 InteractionCompletedEvent {
 
-	private Intent 			serviceIntent;
 	public ListView 		mList;
 	private ASR 			voicerec;
 	private TTS 			tts;
@@ -37,9 +36,6 @@ InteractionCompletedEvent {
 	public static final int DELAY = 1*1000;
 
 	private Handler 		mHandler = new Handler();
-	private Timer 			sleepTimeout;
-
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
